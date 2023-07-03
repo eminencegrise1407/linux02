@@ -211,26 +211,32 @@ _Проверка: в выводе nmap должно быть сказано: `H
     * r2\
        ![netplan apply](img/40.png)
 * Запустить команды на ws11:
-    * ```ip r list 10.10.0.0/[маска сети]``` и ```ip r list 0.0.0.0/0```\
-    * ws11 ![netplan apply](img/44.png)\
+    * ```ip r list 10.10.0.0/[маска сети]``` и ```ip r list 0.0.0.0/0```
+    * ws11 ![netplan apply](img/44.png)
     * Потому что 0.0.0.0/0 это не маршрутизируемый адрес, команда ip r list по нему показывает наикратчайший маршрут.
 ### 5.5. Построение списка маршрутизаторов
 * ```tcpdump -tnv -i eth0```
 * При помощи утилиты traceroute построить список маршрутизаторов на пути от ws11 до ws21
-    * ws11 ![netplan apply](img/45.png)\
-    * r1 ![netplan apply](img/46.png)\
+    * ws11\
+       ![netplan apply](img/45.png)
+    * r1\
+       ![netplan apply](img/46.png)
     * Отправляет на разные узлы пакеты увеличивая срок их жизни (ttl)
 ### 5.6. Использование протокола ICMP при маршрутизации
 * Запустить на r1 перехват сетевого трафика, проходящего через eth0 с помощью команды:
     * ```tcpdump -n -i eth0 icmp```
 * Пропинговать с ws11 несуществующий IP (например, 10.30.0.111) с помощью команды:
     * ```ping -c 1 10.30.0.111```
-* r1 ![netplan apply](img/47.png)\
-* ws11 ![netplan apply](img/48.png)\
+* r1\
+   ![netplan apply](img/47.png)
+* ws11\
+   ![netplan apply](img/48.png)
 ## Part 6. Динамическая настройка IP с помощью DHCP
 * Для r2 настроить в файле /etc/dhcp/dhcpd.conf конфигурацию службы DHCP:
-    * /etc/dhcp/dhcpd.conf ![netplan apply](img/50.png)
-    * resolv.conf ![netplan apply](img/49.png)
+    * /etc/dhcp/dhcpd.conf\
+       ![netplan apply](img/50.png)
+    * resolv.conf\
+       ![netplan apply](img/49.png)
 * Перезагрузить службу DHCP командой systemctl restart isc-dhcp-server. Машину ws21 перезагрузить при помощи reboot и через ip a показать, что она получила адрес. Также пропинговать ws22 с ws21.
     * ![netplan apply](img/51.png)
     * ![netplan apply](img/52.png)
@@ -240,12 +246,11 @@ _Проверка: в выводе nmap должно быть сказано: `H
     * ![netplan apply](img/54.png)
     * ![netplan apply](img/55.png)
     * ![netplan apply](img/56.png)
-    * ![netplan apply](img/69.png)
 * Запросить с ws21 обновление ip адреса
     * ![netplan apply](img/57.png)
     * ![netplan apply](img/58.png)
-    * sudo dhclient -v -r enp0s8
-    * sudo dhclient -v enp0s8
+    * `sudo dhclient -v -r enp0s8`
+    * `sudo dhclient -v enp0s8`
 ## Part 7. NAT
 * В файле /etc/apache2/ports.conf на ws22 и r1 изменить строку Listen 80 на Listen 0.0.0.0:80, то есть сделать сервер Apache2 общедоступным
     * ![netplan apply](img/59.png)
@@ -274,10 +279,10 @@ _Проверка: в выводе nmap должно быть сказано: `H
     * Запустить веб-сервер Apache на ws22 только на localhost (то есть в файле /etc/apache2/ports.conf изменить строку Listen 80 на Listen localhost:80)
     * service apache2 start
 * Воспользоваться Local TCP forwarding с ws21 до ws22, чтобы получить доступ к веб-серверу на ws22 с ws21
-    * ssh -L 8080:localhost:80 pandanus@10.20.0.20
+    * `ssh -L 8080:localhost:80 mellarae@10.20.0.20`
     * ![netplan apply](img/72.png)
 * Воспользоваться Remote TCP forwarding c ws11 до ws22, чтобы получить доступ к веб-серверу на ws22 с ws11
-    * ssh -R 7777:localhost:80 pandanus@10.20.0.20
+    * `ssh -R 7777:localhost:80 mellarae@10.20.0.20`
     * ![netplan apply](img/71.png)
 
 

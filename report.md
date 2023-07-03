@@ -156,58 +156,58 @@ _Проверка: в выводе nmap должно быть сказано: `H
 
 ## Part 5. Статическая маршрутизация сети
 ### 5. 1. Настройка адресов машин
-* Настроить конфигурации машин в etc/netplan/00-installer-config.yaml согласно сети на рисунке.
-    * ws11 ![netplan apply](img/18.png)
-    * r1 ![netplan apply](img/19.png)
-    * r2 ![netplan apply](img/20.png)
-    * ws21 ![netplan apply](img/21.png)
-    * ws22 ![netplan apply](img/22.png)
-* Перезапустить сервис сети. Если ошибок нет, то командой ip -4 a проверить, что адрес машины задан верно. Также пропинговать ws22 с ws21. Аналогично пропинговать r1 с ws11.
-    * ws11 ![netplan apply](img/23.png)
-    * ws21 ![netplan apply](img/24.png)
+* Настроить конфигурации машин в etc/netplan/00-installer-config.yaml согласно сети на рисунке.\
+    * ws11 ![netplan apply](img/18.png)\
+    * r1 ![netplan apply](img/19.png)\
+    * r2 ![netplan apply](img/20.png)\
+    * ws21 ![netplan apply](img/21.png)\
+    * ws22 ![netplan apply](img/22.png)\
+* Перезапустить сервис сети. Если ошибок нет, то командой ip -4 a проверить, что адрес машины задан верно. Также пропинговать ws22 с ws21. Аналогично пропинговать r1 с ws11.\
+    * ws11 ![netplan apply](img/23.png)\
+    * ws21 ![netplan apply](img/24.png)\
 ### 5. 2. Включение переадресации IP-адресов.
-* Для включения переадресации IP, выполните команду на роутерах:
-    * r1 ![netplan apply](img/25.png)
-    * r2 ![netplan apply](img/26.png)
-* Откройте файл /etc/sysctl.conf и добавьте в него следующую строку:
-    * r1 ![netplan apply](img/27.png)
-    * r2 ![netplan apply](img/28.png)
+* Для включения переадресации IP, выполните команду на роутерах:\
+    * r1 ![netplan apply](img/25.png)\
+    * r2 ![netplan apply](img/26.png)\
+* Откройте файл /etc/sysctl.conf и добавьте в него следующую строку:\
+    * r1 ![netplan apply](img/27.png)\
+    * r2 ![netplan apply](img/28.png)\
 ### 5. 3. Установка маршрута по-умолчанию
-* Настроить маршрут по-умолчанию (шлюз) для рабочих станций. Для этого добавить default перед IP роутера в файле конфигураций
-    * ws11 ![netplan apply](img/29.png)
-    * ws21 ![netplan apply](img/30.png)
-    * ws22 ![netplan apply](img/31.png)
-* Вызвать ip r и показать, что добавился маршрут в таблицу маршрутизации
-    * ws11 ![netplan apply](img/32.png)
-    * ws21 ![netplan apply](img/33.png)
-    * ws22 ![netplan apply](img/34.png)
-* Пропинговать с ws11 роутер r2 и показать на r2, что пинг доходит. Для этого использовать команду: ```tcpdump -tn -i eth1```
-    * ![netplan apply](img/42.png)
-    * ![netplan apply](img/43.png)
+* Настроить маршрут по-умолчанию (шлюз) для рабочих станций. Для этого добавить default перед IP роутера в файле конфигураций\
+    * ws11 ![netplan apply](img/29.png)\
+    * ws21 ![netplan apply](img/30.png)\
+    * ws22 ![netplan apply](img/31.png)\
+* Вызвать ip r и показать, что добавился маршрут в таблицу маршрутизации\
+    * ws11 ![netplan apply](img/32.png)\
+    * ws21 ![netplan apply](img/33.png)\
+    * ws22 ![netplan apply](img/34.png)\
+* Пропинговать с ws11 роутер r2 и показать на r2, что пинг доходит. Для этого использовать команду: ```tcpdump -tn -i eth1```\
+    * ![netplan apply](img/42.png)\
+    * ![netplan apply](img/43.png)\
 ### 5. 4. Добавление статических маршрутов
-* Добавить в роутеры r1 и r2 статические маршруты в файле конфигураций. Пример для r1 маршрута в сетку 10.20.0.0/26:
-    * r1 ![netplan apply](img/37.png)
-    * r2 ![netplan apply](img/38.png)
-* Вызвать ip r и показать таблицы с маршрутами на обоих роутерах. Пример таблицы на r1:
-    * r1 ![netplan apply](img/39.png)
-    * r2 ![netplan apply](img/40.png)
+* Добавить в роутеры r1 и r2 статические маршруты в файле конфигураций. Пример для r1 маршрута в сетку 10.20.0.0/26:\
+    * r1 ![netplan apply](img/37.png)\
+    * r2 ![netplan apply](img/38.png)\
+* Вызвать ip r и показать таблицы с маршрутами на обоих роутерах. Пример таблицы на r1:\
+    * r1 ![netplan apply](img/39.png)\
+    * r2 ![netplan apply](img/40.png)\
 * Запустить команды на ws11:
-    * ```ip r list 10.10.0.0/[маска сети]``` и ```ip r list 0.0.0.0/0```
-    * ws11 ![netplan apply](img/44.png)
+    * ```ip r list 10.10.0.0/[маска сети]``` и ```ip r list 0.0.0.0/0```\
+    * ws11 ![netplan apply](img/44.png)\
     * Потому что 0.0.0.0/0 это не маршрутизируемый адрес, команда ip r list по нему показывает наикратчайший маршрут.
 ### 5.5. Построение списка маршрутизаторов
 * ```tcpdump -tnv -i eth0```
 * При помощи утилиты traceroute построить список маршрутизаторов на пути от ws11 до ws21
-    * ws11 ![netplan apply](img/45.png)
-    * r1 ![netplan apply](img/46.png)
+    * ws11 ![netplan apply](img/45.png)\
+    * r1 ![netplan apply](img/46.png)\
     * Отправляет на разные узлы пакеты увеличивая срок их жизни (ttl)
 ### 5.6. Использование протокола ICMP при маршрутизации
 * Запустить на r1 перехват сетевого трафика, проходящего через eth0 с помощью команды:
     * ```tcpdump -n -i eth0 icmp```
 * Пропинговать с ws11 несуществующий IP (например, 10.30.0.111) с помощью команды:
     * ```ping -c 1 10.30.0.111```
-* r1 ![netplan apply](img/47.png)
-* ws11 ![netplan apply](img/48.png)
+* r1 ![netplan apply](img/47.png)\
+* ws11 ![netplan apply](img/48.png)\
 ## Part 6. Динамическая настройка IP с помощью DHCP
 * Для r2 настроить в файле /etc/dhcp/dhcpd.conf конфигурацию службы DHCP:
     * /etc/dhcp/dhcpd.conf ![netplan apply](img/50.png)

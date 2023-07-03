@@ -156,8 +156,8 @@ _Проверка: в выводе nmap должно быть сказано: `H
 
 ## Part 5. Статическая маршрутизация сети
 ### 5. 1. Настройка адресов машин
-* Настроить конфигурации машин в etc/netplan/00-installer-config.yaml согласно сети на рисунке.\
-    * ws11 ![netplan apply](img/18.png)\
+* Настроить конфигурации машин в etc/netplan/00-installer-config.yaml согласно сети на рисунке.
+    * ws11\ ![netplan apply](img/18.png)\
     * r1 ![netplan apply](img/19.png)\
     * r2 ![netplan apply](img/20.png)\
     * ws21 ![netplan apply](img/21.png)\

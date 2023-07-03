@@ -160,10 +160,13 @@ _Проверка: в выводе nmap должно быть сказано: `H
     * ws11\
       ![netplan apply](img/18.png)
     * r1\
-      ![netplan apply](img/19.png)\
-    * r2 ![netplan apply](img/20.png)\
-    * ws21 ![netplan apply](img/21.png)\
-    * ws22 ![netplan apply](img/22.png)\
+      ![netplan apply](img/19.png)
+    * r2\
+       ![netplan apply](img/20.png)\
+    * ws21\
+       ![netplan apply](img/21.png)\
+    * ws22\
+       ![netplan apply](img/22.png)\
 * Перезапустить сервис сети. Если ошибок нет, то командой ip -4 a проверить, что адрес машины задан верно. Также пропинговать ws22 с ws21. Аналогично пропинговать r1 с ws11.\
     * ws11 ![netplan apply](img/23.png)\
     * ws21 ![netplan apply](img/24.png)\

@@ -169,10 +169,10 @@ _Проверка: в выводе nmap должно быть сказано: `H
        ![netplan apply](img/22.png)
 * Перезапустить сервис сети. Если ошибок нет, то командой ip -4 a проверить, что адрес машины задан верно. Также пропинговать ws22 с ws21. Аналогично пропинговать r1 с ws11.
     * ws11\
-       ![netplan apply](img/23 — копия.png)\
-      ws11 ![netplan apply](img/23.png)
+      ![netplan apply](img/23c.png)\
+      ![netplan apply](img/23.png)
     * ws21\
-       ![netplan apply](img/24 — копия.png)\
+       ![netplan apply](img/24c.png)\
        ![netplan apply](img/24.png)
 ### 5. 2. Включение переадресации IP-адресов.
 * Для включения переадресации IP, выполните команду на роутерах:
@@ -243,6 +243,7 @@ _Проверка: в выводе nmap должно быть сказано: `H
        ![netplan apply](img/49.png)
 * Перезагрузить службу DHCP командой systemctl restart isc-dhcp-server. Машину ws21 перезагрузить при помощи reboot и через ip a показать, что она получила адрес. Также пропинговать ws22 с ws21.
     * ![netplan apply](img/51.png)
+    * ![netplan apply](img/52c.png)
     * ![netplan apply](img/52.png)
 * Указать MAC адрес у ws11, для этого в etc/netplan/00-installer-config.yaml надо добавить строки: macaddress: 10:10:10:10:10:BA, dhcp4: true
     * etc/netplan/00-installer-config.yaml ![netplan apply](img/53.png)
@@ -275,6 +276,7 @@ _Проверка: в выводе nmap должно быть сказано: `H
 * Добавить в файл ещё два правила:
     * ![netplan apply](img/67.png)
 * Проверить соединение по TCP
+    * ![netplan apply](img/68c.png)
     * ![netplan apply](img/68.png)
 ## Part 8. Дополнительно. Знакомство с SSH Tunnels
 * Запустить на r2 фаервол с правилами из Части 7
@@ -284,6 +286,7 @@ _Проверка: в выводе nmap должно быть сказано: `H
     * service apache2 start
 * Воспользоваться Local TCP forwarding с ws21 до ws22, чтобы получить доступ к веб-серверу на ws22 с ws21
     * `ssh -L 8080:localhost:80 mellarae@10.20.0.20`
+    * ![netplan apply](img/72c.png)
     * ![netplan apply](img/72.png)
 * Воспользоваться Remote TCP forwarding c ws11 до ws22, чтобы получить доступ к веб-серверу на ws22 с ws11
     * `ssh -R 7777:localhost:80 mellarae@10.20.0.20`
